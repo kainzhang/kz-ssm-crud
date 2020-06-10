@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.lokka.ssmcrud.dao.CategoryMapper">
+
+    <!--mapper中方法的实现配置属性-->
+    <select id="selectAll" resultMap="CategoryBaseResultMap">
+        SELECT * FROM jz_category
+    </select>
+
+    <insert id="insert" parameterType="me.lokka.ssmcrud.bean.Category">
+        INSERT INTO jz_category VALUES (null,#{name} ,#{nu} ,#{parentId} )
+    </insert>
+
+    <select id="selectCategoryTree" resultMap="CategoryTreeResultMap">
+      SELECT * FROM jz_category WHERE parent_id IS NULL
+    </select>
+
+    <select id="selectByParentId" resultMap="CategoryBaseResultMap">
+      SELECT * FROM jz_category WHERE parent_id = #{id}
+    </select>
+
+    <!--映射结果集-->
+    <resultMap id="CategoryBaseResultMap" type="me.lokka.ssmcrud.bean.Category">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="nu" column="nu"></result>
+        <result property="parentId" column="parent_id"></result>
+    </resultMap>
+
+    <resultMap id="CategoryTreeResultMap"
+               type="me.lokka.ssmcrud.bean.extend.CategoryExtend"
+               extends="CategoryBaseResultMap">
+        <collection property="children" column="id" select="selectByParentId"></collection>
+    </resultMap>
+</mapper>
