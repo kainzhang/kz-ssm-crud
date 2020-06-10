@@ -1,12 +1,13 @@
 package me.lokka.ssmcrud.dao;
 
 import me.lokka.ssmcrud.bean.Product;
+import me.lokka.ssmcrud.bean.extend.ProductExtend;
 
 import java.util.List;
 
 public interface ProductMapper {
 
-    List<Product> selectAll();
+    List<ProductExtend> selectAll();
 
     List<Product> selectByCategoryId(long categoryId);
 

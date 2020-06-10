@@ -1,6 +1,7 @@
 package me.lokka.ssmcrud.service.impl;
 
 import me.lokka.ssmcrud.bean.Product;
+import me.lokka.ssmcrud.bean.extend.ProductExtend;
 import me.lokka.ssmcrud.dao.ProductMapper;
 import me.lokka.ssmcrud.service.IProductService;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class ProductServiceImpl implements IProductService {
     private ProductMapper productMapper;
 
     @Override
-    public List<Product> findAll() {
+    public List<ProductExtend> findAll() {
         return productMapper.selectAll();
     }
 

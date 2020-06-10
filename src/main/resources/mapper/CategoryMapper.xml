@@ -7,6 +7,10 @@
         SELECT * FROM jz_category
     </select>
 
+    <select id="selectById" resultMap="CategoryBaseResultMap">
+        SELECT * FROM jz_category WHERE id=#{id}
+    </select>
+
     <insert id="insert" parameterType="me.lokka.ssmcrud.bean.Category">
         INSERT INTO jz_category VALUES (null,#{name} ,#{nu} ,#{parentId} )
     </insert>

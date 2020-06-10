@@ -14,31 +14,21 @@ public class CategoryServiceImpl implements ICategoryService {
     @Resource
     private CategoryMapper categoryMapper;
 
-    /**
-     * 查询所有
-     *
-     * @return
-     */
     @Override
     public List<Category> findAll() {
         return categoryMapper.selectAll();
     }
 
-    /**
-     * 保存
-     *
-     * @param category
-     */
+    @Override
+    public Category findById(long id) {
+        return categoryMapper.selectById(id);
+    }
+
     @Override
     public void save(Category category) {
         categoryMapper.insert(category);
     }
 
-    /**
-     * 查询栏目树
-     *
-     * @return
-     */
     @Override
     public List<CategoryExtend> findCategoryTree() {
         return categoryMapper.selectCategoryTree();

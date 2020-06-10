@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="me.lokka.ssmcrud.dao.ProductMapper">
 
-    <!--mapper中方法的实现配置属性-->
-    <select id="selectAll" resultMap="ProductBaseResultMap">
+    <select id="selectAll" resultMap="ProductExtendResultMap">
         SELECT * FROM jz_product
     </select>
 
@@ -24,7 +23,6 @@
         DELETE FROM jz_product WHERE id=#{id}
     </delete>
 
-    <!--映射结果集-->
     <resultMap id="ProductBaseResultMap" type="me.lokka.ssmcrud.bean.Product">
         <id property="id" column="id"></id>
         <result property="name" column="name"></result>
@@ -34,6 +32,16 @@
         <result property="photo" column="photo"></result>
         <result property="sales" column="sales"></result>
         <result property="categoryId" column="category_id"></result>
+
+    </resultMap>
+
+    <resultMap id="ProductExtendResultMap" type="me.lokka.ssmcrud.bean.extend.ProductExtend" extends="ProductBaseResultMap">
+        <association property="category" column="category_id" javaType="me.lokka.ssmcrud.bean.Category" select="me.lokka.ssmcrud.dao.CategoryMapper.selectById">
+            <id property="id" column="id"></id>
+            <result property="name" column="name"></result>
+            <result property="nu" column="nu"></result>
+            <result property="parentId" column="parent_id"></result>
+        </association>
     </resultMap>
 
 </mapper>

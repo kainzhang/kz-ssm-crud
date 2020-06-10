@@ -1,6 +1,7 @@
 package me.lokka.ssmcrud.web.controller;
 
 import me.lokka.ssmcrud.bean.Product;
+import me.lokka.ssmcrud.bean.extend.ProductExtend;
 import me.lokka.ssmcrud.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ public class ProductController {
     private IProductService productService;
 
     @GetMapping("findAll")
-    public List<Product> findAll() {
+    public List<ProductExtend> findAll() {
         return productService.findAll();
     }
 
@@ -25,7 +26,6 @@ public class ProductController {
     public List<Product> findByCategory(long categoryId) {
         return productService.findByCategoryId(categoryId);
     }
-
 
     @PostMapping("saveOrEdit")
     public String saveOrEdit(Product product) {

@@ -1,12 +1,13 @@
 package me.lokka.ssmcrud.service;
 
 import me.lokka.ssmcrud.bean.Product;
+import me.lokka.ssmcrud.bean.extend.ProductExtend;
 
 import java.util.List;
 
 public interface IProductService {
 
-    List<Product> findAll();
+    List<ProductExtend> findAll();
 
     List<Product> findByCategoryId(long categoryId);
 

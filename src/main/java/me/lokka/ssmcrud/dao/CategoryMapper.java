@@ -10,6 +10,8 @@ public interface CategoryMapper {
 
     List<Category> selectAll();
 
+    Category selectById(long id);
+
     void insert(Category category);
 
     List<CategoryExtend> selectCategoryTree();

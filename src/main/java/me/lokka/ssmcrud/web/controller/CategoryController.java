@@ -22,10 +22,15 @@ public class CategoryController {
         return categoryService.findAll();
     }
 
+    @GetMapping("findById")
+    public Category findById(long id) {
+        return categoryService.findById(id);
+    }
+
     @PostMapping("save")
     public String save(Category category) {
         categoryService.save(category);
-        return "保存成功";
+        return "SUCCESS";
     }
 
     @GetMapping("findCategoryTree")
