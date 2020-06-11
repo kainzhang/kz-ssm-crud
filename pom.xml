@@ -8,10 +8,10 @@
         <version>2.2.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.kzlokka</groupId>
-    <artifactId>ssmcrud</artifactId>
+    <groupId>me.lokka</groupId>
+    <artifactId>jz</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ssmcrud</name>
+    <name>jz</name>
     <description>SSM CRUD</description>
 
     <properties>
@@ -58,6 +58,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.4.0</version>
             </plugin>
         </plugins>
     </build>

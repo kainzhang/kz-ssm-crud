@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.lokka.jz.dao.extend.ProductExtendMapper">
+
+    <select id="selectAllWithCategory" resultMap="ExtendResultMap">
+        SELECT * FROM jz_product
+    </select>
+
+    <select id="selectByCategoryId" resultMap="me.lokka.jz.dao.ProductMapper.BaseResultMap">
+        SELECT * FROM jz_product WHERE category_id=#{categoryId, jdbcType=BIGINT}
+    </select>
+
+    <resultMap id="ExtendResultMap" type="me.lokka.jz.bean.extend.ProductExtend" extends="me.lokka.jz.dao.ProductMapper.BaseResultMap">
+        <association property="category" column="category_id" javaType="me.lokka.jz.bean.Category" select="me.lokka.jz.dao.CategoryMapper.selectByPrimaryKey">
+            <id property="id" column="id"></id>
+            <result property="name" column="name"></result>
+            <result property="nu" column="nu"></result>
+            <result property="parentId" column="parent_id"></result>
+        </association>
+    </resultMap>
+
+</mapper>
