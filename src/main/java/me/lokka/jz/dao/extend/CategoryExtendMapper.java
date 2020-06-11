@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CategoryExtendMapper extends CategoryMapper {
 
-    List<CategoryExtend> selectCategoryTree();
+    List<CategoryExtend> selectAllWithChild();
 
     List<Category> selectByParentId(long id);
 

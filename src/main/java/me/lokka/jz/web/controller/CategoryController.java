@@ -17,24 +17,30 @@ public class CategoryController {
     @Autowired
     private ICategoryService categoryService;
 
-    @GetMapping("findAll")
+    @GetMapping("find_all")
     public List<Category> findAll() {
         return categoryService.findAll();
     }
 
-    @GetMapping("findById")
+    @GetMapping("find_all_with_child")
+    public List<CategoryExtend> findAllWithChild() {
+        return categoryService.findAllWithChild();
+    }
+
+    @GetMapping("find_by_id")
     public Category findById(long id) {
         return categoryService.findById(id);
     }
 
-    @PostMapping("saveOrEdit")
-    public String save(Category category) {
+    @PostMapping("save_or_edit")
+    public String saveOrEdit(Category category) {
         categoryService.saveOrEdit(category);
         return "SUCCESS";
     }
 
-    @GetMapping("findCategoryTree")
-    public List<CategoryExtend> findCategoryTree() {
-        return categoryService.findCategoryTree();
+    @GetMapping("del_by_id")
+    public String delById(long id) {
+        categoryService.delById(id);
+        return "SUCCESS";
     }
 }

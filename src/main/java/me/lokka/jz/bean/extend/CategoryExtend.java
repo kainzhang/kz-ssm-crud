@@ -7,13 +7,13 @@ import java.util.List;
 
 
 public class CategoryExtend extends Category {
-    private List<Category> children;
+    private List<Category> child;
 
     public List<Category> getChildren() {
-        return children;
+        return child;
     }
 
     public void setChildren(List<Category> children) {
-        this.children = children;
+        this.child = child;
     }
 }

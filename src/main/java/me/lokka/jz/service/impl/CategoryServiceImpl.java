@@ -20,8 +20,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public List<Category> findAll() {
-        CategoryExample example = new CategoryExample();
-        return categoryMapper.selectByExample(example);
+        return categoryMapper.selectByExample(new CategoryExample());
     }
 
     @Override
@@ -38,7 +37,12 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public List<CategoryExtend> findCategoryTree() {
-        return categoryExtendMapper.selectCategoryTree();
+    public void delById(long id) {
+        categoryMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<CategoryExtend> findAllWithChild() {
+        return categoryExtendMapper.selectAllWithChild();
     }
 }

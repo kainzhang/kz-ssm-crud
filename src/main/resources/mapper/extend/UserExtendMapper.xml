@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.lokka.jz.dao.extend.UserExtendMapper">
+
+    <select id="selectAllWithRole" resultMap="ExtendResultMap">
+        SELECT * FROM base_user
+    </select>
+
+    <resultMap id="ExtendResultMap" type="me.lokka.jz.bean.extend.UserExtend" extends="me.lokka.jz.dao.UserMapper.BaseResultMap">
+        <association property="role" column="role_id" select="me.lokka.jz.dao.RoleMapper.selectByPrimaryKey">
+            <id property="id" column="id"></id>
+            <result property="name" column="name"></result>
+        </association>
+    </resultMap>
+
+</mapper>

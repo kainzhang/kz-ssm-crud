@@ -11,7 +11,7 @@
     </select>
 
     <resultMap id="ExtendResultMap" type="me.lokka.jz.bean.extend.ProductExtend" extends="me.lokka.jz.dao.ProductMapper.BaseResultMap">
-        <association property="category" column="category_id" javaType="me.lokka.jz.bean.Category" select="me.lokka.jz.dao.CategoryMapper.selectByPrimaryKey">
+        <association property="category" column="category_id" select="me.lokka.jz.dao.CategoryMapper.selectByPrimaryKey">
             <id property="id" column="id"></id>
             <result property="name" column="name"></result>
             <result property="nu" column="nu"></result>

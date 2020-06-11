@@ -14,5 +14,7 @@ public interface ICategoryService {
 
     void saveOrEdit(Category category);
 
-    List<CategoryExtend> findCategoryTree();
+    void delById(long id);
+
+    List<CategoryExtend> findAllWithChild();
 }

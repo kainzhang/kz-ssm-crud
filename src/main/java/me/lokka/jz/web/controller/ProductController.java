@@ -17,28 +17,28 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
-    @GetMapping("findAll")
+    @GetMapping("find_all")
     public List<Product> findAll() {
         return productService.findAll();
     }
 
-    @GetMapping("findAllWithCategory")
+    @GetMapping("find_all_with_category")
     public List<ProductExtend> findAllWithCategory() {
         return productService.findAllWithCategory();
     }
 
-    @GetMapping("findByCategory")
+    @GetMapping("find_by_category_id")
     public List<Product> findByCategory(long categoryId) {
         return productService.findByCategoryId(categoryId);
     }
 
-    @PostMapping("saveOrEdit")
+    @PostMapping("save_or_edit")
     public String saveOrEdit(Product product) {
         productService.saveOrEdit(product);
         return "SUCCESS";
     }
 
-    @GetMapping("delById")
+    @GetMapping("del_by_id")
     public String delById(long id) {
         productService.delById(id);
         return "SUCCESS";

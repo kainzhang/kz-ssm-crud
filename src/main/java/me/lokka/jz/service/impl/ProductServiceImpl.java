@@ -21,8 +21,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<Product> findAll() {
-        ProductExample example = new ProductExample();
-        return productMapper.selectByExample(example);
+        return productMapper.selectByExample(new ProductExample());
     }
 
     @Override
@@ -37,10 +36,11 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public void saveOrEdit(Product product) {
-        if (product.getId() == null)
+        if (product.getId() == null) {
             productMapper.insert(product);
-        else
+        } else {
             productMapper.updateByPrimaryKey(product);
+        }
     }
 
     @Override
