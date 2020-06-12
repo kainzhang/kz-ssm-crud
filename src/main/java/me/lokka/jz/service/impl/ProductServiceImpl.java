@@ -6,6 +6,7 @@ import me.lokka.jz.bean.extend.ProductExtend;
 import me.lokka.jz.dao.ProductMapper;
 import me.lokka.jz.dao.extend.ProductExtendMapper;
 import me.lokka.jz.service.IProductService;
+import me.lokka.jz.utils.CustomerException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,16 +36,24 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public void saveOrEdit(Product product) {
+    public void saveOrEdit(Product product) throws CustomerException {
         if (product.getId() == null) {
             productMapper.insert(product);
         } else {
+            Product productT = productMapper.selectByPrimaryKey(product.getId());
+            if (productT == null) {
+                throw new CustomerException("修改失败，数据不存在");
+            }
             productMapper.updateByPrimaryKey(product);
         }
     }
 
     @Override
-    public void delById(long id) {
+    public void delById(long id) throws CustomerException {
+        Product product = productMapper.selectByPrimaryKey(id);
+        if (product == null) {
+            throw new CustomerException("删除失败，数据不存在");
+        }
         productMapper.deleteByPrimaryKey(id);
     }
 }

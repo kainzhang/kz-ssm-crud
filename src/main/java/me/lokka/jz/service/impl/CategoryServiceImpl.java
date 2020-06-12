@@ -6,6 +6,7 @@ import me.lokka.jz.bean.extend.CategoryExtend;
 import me.lokka.jz.dao.CategoryMapper;
 import me.lokka.jz.dao.extend.CategoryExtendMapper;
 import me.lokka.jz.service.ICategoryService;
+import me.lokka.jz.utils.CustomerException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,25 +25,35 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    public List<CategoryExtend> findAllWithChild() {
+        return categoryExtendMapper.selectAllWithChild();
+    }
+
+    @Override
     public Category findById(long id) {
         return categoryMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public void saveOrEdit(Category category) {
-        if (category.getId() == null)
+        if (category.getId() == null) {
             categoryMapper.insert(category);
-        else
+        } else {
+            Category categoryT = categoryMapper.selectByPrimaryKey(category.getId());
+            if (categoryT == null) {
+                throw new CustomerException("修改失败，数据不存在");
+            }
             categoryMapper.updateByPrimaryKey(category);
+        }
     }
 
     @Override
-    public void delById(long id) {
+    public void delById(long id) throws CustomerException {
+        Category category = categoryMapper.selectByPrimaryKey(id);
+        if (category == null) {
+            throw new CustomerException("删除失败，数据不存在");
+        }
         categoryMapper.deleteByPrimaryKey(id);
     }
 
-    @Override
-    public List<CategoryExtend> findAllWithChild() {
-        return categoryExtendMapper.selectAllWithChild();
-    }
 }

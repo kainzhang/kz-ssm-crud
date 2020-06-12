@@ -9,9 +9,9 @@ public interface IUserService {
 
     List<User> findAll();
 
+    List<UserExtend> findAllWithRole();
+
     void saveOrEdit(User user);
 
     void delById(long id);
-
-    List<UserExtend> findAllWithRole();
 }

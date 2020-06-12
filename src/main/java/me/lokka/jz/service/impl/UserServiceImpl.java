@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements IUserService {
+
     @Resource
     private UserMapper userMapper;
     @Resource
@@ -21,6 +22,11 @@ public class UserServiceImpl implements IUserService {
     @Override
     public List<User> findAll() {
         return userMapper.selectByExample(new UserExample());
+    }
+
+    @Override
+    public List<UserExtend> findAllWithRole() {
+        return userExtendMapper.selectAllWithRole();
     }
 
     @Override
@@ -35,10 +41,5 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void delById(long id) {
         userMapper.deleteByPrimaryKey(id);
-    }
-
-    @Override
-    public List<UserExtend> findAllWithRole() {
-        return userExtendMapper.selectAllWithRole();
     }
 }
