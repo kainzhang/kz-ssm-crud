@@ -6,6 +6,10 @@
         SELECT * FROM base_user
     </select>
 
+    <select id="selectById" resultMap="ExtendResultMap">
+        SELECT * FROM base_user WHERE id = #{id}
+    </select>
+
     <resultMap id="ExtendResultMap" type="me.lokka.jz.bean.extend.UserExtend" extends="me.lokka.jz.dao.UserMapper.BaseResultMap">
         <association property="role" column="role_id" select="me.lokka.jz.dao.RoleMapper.selectByPrimaryKey">
             <id property="id" column="id"></id>

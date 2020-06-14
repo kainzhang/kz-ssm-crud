@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 
-@Api(description = "角色管理")
+@Api(description = "角色管理接口")
 @RestController
 @RequestMapping("/role")
 public class RoleController {

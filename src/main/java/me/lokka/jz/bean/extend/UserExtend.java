@@ -4,6 +4,7 @@ import me.lokka.jz.bean.Role;
 import me.lokka.jz.bean.User;
 
 public class UserExtend extends User {
+
     private Role role;
 
     public Role getRole() {
@@ -13,4 +14,5 @@ public class UserExtend extends User {
     public void setRole(Role role) {
         this.role = role;
     }
+
 }

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Api(description = "权限管理")
+@Api(description = "权限管理接口")
 @RestController
 @RequestMapping("/privilege")
 public class PrivilegeController {

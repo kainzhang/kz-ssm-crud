@@ -66,9 +66,9 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * @Descr 通过 订单ID 查询详细信息
-     *
      * @param id
+     * @return
+     * @Descr 通过 订单ID 查询详细信息
      */
     @Override
     public OrderExtend findOrderDetailsById(long id) {
@@ -76,9 +76,9 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * @Descr 通过 订单状态 查询信息
-     *
      * @param status
+     * @return
+     * @Descr 通过 订单状态 查询信息
      */
     @Override
     public List<Order> findByStatus(String status) {
@@ -90,9 +90,9 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * @Descr 通过 订单顾客ID 查询信息
-     *
      * @param customerId
+     * @return
+     * @Descr 通过 订单顾客ID 查询信息
      */
     @Override
     public List<Order> findByCustomer(long customerId) {
@@ -104,9 +104,9 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * @Descr 通过 员工ID 查询信息
-     *
      * @param employeeId
+     * @return
+     * @Descr 通过 员工ID 查询信息
      */
     @Override
     public List<Order> findByEmployee(long employeeId) {
@@ -118,10 +118,10 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * @Descr 通过 顾客ID + 订单状态 查询信息
-     *
      * @param customerId
      * @param status
+     * @return
+     * @Descr 通过 顾客ID + 订单状态 查询信息
      */
     @Override
     public List<Order> findByCustomerAndStatus(long customerId, String status) {
@@ -133,10 +133,10 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * @Descr 通过 员工ID + 订单状态 查询信息
-     *
      * @param employeeId
      * @param status
+     * @return
+     * @Descr 通过 员工ID + 订单状态 查询信息
      */
     @Override
     public List<Order> findByEmployeeAndStatus(long employeeId, String status) {
@@ -148,10 +148,10 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * @Descr 通过 起止时间 查询信息
-     *
      * @param fromDate
      * @param toDate
+     * @return
+     * @Descr 通过 起止时间 查询信息
      */
     @Override
     public List<Order> findByDate(long fromDate, long toDate) {
@@ -163,11 +163,11 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * @Descr 通过 顾客ID + 起止日期 查询信息
-     *
      * @param customerId
      * @param fromDate
      * @param toDate
+     * @return
+     * @Descr 通过 顾客ID + 起止日期 查询信息
      */
     @Override
     public List<Order> findByCustomerAndDate(long customerId, long fromDate, long toDate) {
@@ -179,11 +179,11 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * @Descr 通过 员工ID + 起止日期 查询信息
-     *
      * @param employeeId
      * @param fromDate
      * @param toDate
+     * @return
+     * @Descr 通过 员工ID + 起止日期 查询信息
      */
     @Override
     public List<Order> findByEmployeeAndDate(long employeeId, long fromDate, long toDate) {
@@ -195,12 +195,12 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * @Descr 通过 顾客ID + 起止日期 + 订单状态 查询信息
-     *
      * @param customerId
      * @param fromDate
      * @param toDate
      * @param status
+     * @return
+     * @Descr 通过 顾客ID + 起止日期 + 订单状态 查询信息
      */
     @Override
     public List<Order> findByCustomerAndDateAndStatus(long customerId, long fromDate, long toDate, String status) {
@@ -212,12 +212,12 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * @Descr 通过 员工ID + 起止日期 + 订单状态 查询信息
-     *
      * @param employeeId
      * @param fromDate
      * @param toDate
      * @param status
+     * @return
+     * @Descr 通过 员工ID + 起止日期 + 订单状态 查询信息
      */
     @Override
     public List<Order> findByEmployeeAndDateAndStatus(long employeeId, long fromDate, long toDate, String status) {
@@ -229,10 +229,10 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
-     * @Descr 通过 订单ID 修改 订单状态
-     *
      * @param id
      * @param status
+     * @throws CustomerException
+     * @Descr 通过 订单ID 修改 订单状态
      */
     @Override
     public void editOrderStatus(long id, String status) throws CustomerException{

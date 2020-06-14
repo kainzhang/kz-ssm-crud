@@ -11,7 +11,8 @@
         SELECT * FROM base_privilege WHERE parent_id=#{id}
     </select>
 
-    <resultMap id="TreeResultMap" type="me.lokka.jz.bean.extend.PrivilegeExtend" extends="me.lokka.jz.dao.PrivilegeMapper.BaseResultMap">
+    <resultMap id="TreeResultMap" type="me.lokka.jz.bean.extend.PrivilegeExtend"
+               extends="me.lokka.jz.dao.PrivilegeMapper.BaseResultMap">
         <collection property="child" column="id" select="selectByParentId" />
     </resultMap>
 </mapper>

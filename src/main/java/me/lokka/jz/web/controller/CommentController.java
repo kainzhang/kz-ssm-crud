@@ -23,28 +23,30 @@ import java.util.List;
 public class CommentController {
     @Autowired
     private ICommentService commentService;
+
     @PostMapping("commit")
     @ApiOperation("提交评论")
     public Message commit(Comment comment){
         commentService.commit(comment);
-        return MessageUtil.success("提交成功");}
+        return MessageUtil.success("提交成功");
+    }
 
     @ApiOperation(value = "查询所有评论")
-    @GetMapping("findAll")
+    @GetMapping("find_all")
     public List<Comment> findAll(){
         return commentService.findAll();
     }
 
 
     @ApiOperation(value = "查询所有评论,级联获得评论")
-    @GetMapping("findAllWithChild")
+    @GetMapping("find_all_with_child")
     public List<CommentExtend> findAllWithChild(){
         return commentService.findAllWithChild();
     }
 
     @ApiOperation(value = "通过id查询评论")
-    @GetMapping("selectById")
-    public  Comment selectById(Long id){
+    @GetMapping("find_by_id")
+    public Comment selectById(Long id){
         return  commentService.selectById(id);
     }
 
@@ -53,8 +55,8 @@ public class CommentController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id" ,value = "唯一编号", required = true, paramType = "query")
     })
-    @GetMapping("deleteById")
-    public Message deleteById(long id){
+    @GetMapping("del_by_id")
+    public Message delById(long id){
         commentService.deleteById(id);
         return MessageUtil.success("删除成功");
     }

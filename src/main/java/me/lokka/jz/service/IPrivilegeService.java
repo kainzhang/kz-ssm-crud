@@ -1,6 +1,5 @@
 package me.lokka.jz.service;
 
-import me.lokka.jz.bean.Category;
 import me.lokka.jz.bean.Privilege;
 import me.lokka.jz.bean.extend.PrivilegeExtend;
 import me.lokka.jz.utils.CustomerException;
@@ -18,4 +17,5 @@ public interface IPrivilegeService {
     void saveOrEdit(Privilege privilege) throws CustomerException;
 
     void delById(long id) throws CustomerException;
+
 }

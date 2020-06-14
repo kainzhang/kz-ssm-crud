@@ -1,6 +1,7 @@
 package me.lokka.jz.service;
 
 import me.lokka.jz.bean.RolePrivilege;
+import me.lokka.jz.bean.extend.RolePrivilegeExtend;
 import me.lokka.jz.utils.CustomerException;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface IRolePrivilegeService {
 
     List<RolePrivilege> findAll();
 
-//    List<CategoryExtend> findAllWithChild();
+    List<RolePrivilegeExtend> findAllWithRoleAndPrivilege();
 
     RolePrivilege findById(long id);
 

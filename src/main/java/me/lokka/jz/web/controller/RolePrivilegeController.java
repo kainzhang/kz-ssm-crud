@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import me.lokka.jz.bean.RolePrivilege;
+import me.lokka.jz.bean.extend.RolePrivilegeExtend;
 import me.lokka.jz.service.IRolePrivilegeService;
 import me.lokka.jz.utils.Message;
 import me.lokka.jz.utils.MessageUtil;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Api(description = "角色权限")
+@Api(description = "角色权限管理接口")
 @RestController
 @RequestMapping("/role_privilege")
 public class RolePrivilegeController {
@@ -28,8 +29,6 @@ public class RolePrivilegeController {
         List<RolePrivilege> list = rolePrivilegeService.findAll();
         return MessageUtil.success(list);
     }
-
-
 
     @ApiOperation(value = "通过ID查找")
     @ApiImplicitParam(name = "id", value = "类别唯一编号", required = true, paramType = "query")
@@ -44,6 +43,13 @@ public class RolePrivilegeController {
     public Message saveOrEdit(RolePrivilege rolePrivilege) {
         rolePrivilegeService.saveOrEdit(rolePrivilege);
         return MessageUtil.success("保存成功");
+    }
+
+    @ApiOperation(value = "获取全部 + 角色信息 + 权限信息")
+    @GetMapping("find_all_with_role_and_privilege")
+    public Message findAllWithRoleAndPrivilege() {
+        List<RolePrivilegeExtend> list = rolePrivilegeService.findAllWithRoleAndPrivilege();
+        return MessageUtil.success(list);
     }
 
     @ApiOperation(value = "通过ID删除")
