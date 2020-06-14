@@ -10,6 +10,4 @@ public interface ProductExtendMapper extends ProductMapper {
 
     List<ProductExtend> selectAllWithCategory();
 
-    List<Product> selectByCategoryId(long categoryId);
-
 }

@@ -1,5 +1,12 @@
 package me.lokka.jz.bean.extend;
 
+/**
+ * @Class: OrderExtend
+ * @Descr: Order 扩展类
+ * @Author: LOKKA
+ * @Date: 2020/6/13 19:30
+ **/
+
 import me.lokka.jz.bean.Address;
 import me.lokka.jz.bean.Order;
 import me.lokka.jz.bean.OrderLine;
@@ -11,6 +18,7 @@ public class OrderExtend extends Order {
     public static final String STATUS_UNPAID = "未付款";
     public static final String STATUS_PAID = "已付款";
     public static final String STATUS_PROCESSIN = "处理中";
+    public static final String STATUS_2BCOMMENT = "待评论";
     public static final String STATUS_DONE = "已完成";
 
     private User customer;
@@ -50,5 +58,3 @@ public class OrderExtend extends Order {
         this.orderLines = orderLines;
     }
 }
-
-

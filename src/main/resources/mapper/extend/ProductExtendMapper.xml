@@ -6,10 +6,6 @@
         SELECT * FROM jz_product
     </select>
 
-    <select id="selectByCategoryId" resultMap="me.lokka.jz.dao.ProductMapper.BaseResultMap">
-        SELECT * FROM jz_product WHERE category_id=#{categoryId, jdbcType=BIGINT}
-    </select>
-
     <resultMap id="ExtendResultMap" type="me.lokka.jz.bean.extend.ProductExtend" extends="me.lokka.jz.dao.ProductMapper.BaseResultMap">
         <association property="category" column="category_id" select="me.lokka.jz.dao.CategoryMapper.selectByPrimaryKey">
             <id property="id" column="id"></id>

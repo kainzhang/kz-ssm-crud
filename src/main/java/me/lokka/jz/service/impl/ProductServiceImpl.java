@@ -32,7 +32,10 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<Product> findByCategoryId(long categoryId) {
-        return productExtendMapper.selectByCategoryId(categoryId);
+        ProductExample example = new ProductExample();
+        ProductExample.Criteria criteria = example.createCriteria();
+        criteria.andCategoryIdEqualTo(categoryId);
+        return productMapper.selectByExample(example);
     }
 
     @Override

@@ -16,6 +16,13 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @Class: OrderServiceImpl
+ * @Descr: 订单业务实现类
+ * @Author: LOKKA
+ * @Date: 2020/6/12 18:44
+ **/
+
 @Service
 public class OrderServiceImpl implements IOrderService {
 
@@ -46,21 +53,195 @@ public class OrderServiceImpl implements IOrderService {
         orderMapper.insert(order);
 
         for(OrderLine orderLine : orderLines){
-            // 设置order与orderline之间的关键（外键维护）
             orderLine.setOrderId(order.getId());
             orderLineMapper.insert(orderLine);
         }
-
     }
 
     @Override
     public List<Order> findAll() {
-        return orderMapper.selectByExample(new OrderExample());
+        OrderExample example = new OrderExample();
+        example.setOrderByClause("order_time desc");
+        return orderMapper.selectByExample(example);
     }
 
+    /**
+     * @Descr 通过 订单ID 查询详细信息
+     *
+     * @param id
+     */
     @Override
     public OrderExtend findOrderDetailsById(long id) {
         return orderExtendMapper.selectById(id);
+    }
+
+    /**
+     * @Descr 通过 订单状态 查询信息
+     *
+     * @param status
+     */
+    @Override
+    public List<Order> findByStatus(String status) {
+        OrderExample example = new OrderExample();
+        example.setOrderByClause("order_time desc");
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(status);
+        return orderMapper.selectByExample(example);
+    }
+
+    /**
+     * @Descr 通过 订单顾客ID 查询信息
+     *
+     * @param customerId
+     */
+    @Override
+    public List<Order> findByCustomer(long customerId) {
+        OrderExample example = new OrderExample();
+        example.setOrderByClause("order_time desc");
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(customerId);
+        return orderMapper.selectByExample(example);
+    }
+
+    /**
+     * @Descr 通过 员工ID 查询信息
+     *
+     * @param employeeId
+     */
+    @Override
+    public List<Order> findByEmployee(long employeeId) {
+        OrderExample example = new OrderExample();
+        example.setOrderByClause("order_time desc");
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andEmployeeIdEqualTo(employeeId);
+        return orderMapper.selectByExample(example);
+    }
+
+    /**
+     * @Descr 通过 顾客ID + 订单状态 查询信息
+     *
+     * @param customerId
+     * @param status
+     */
+    @Override
+    public List<Order> findByCustomerAndStatus(long customerId, String status) {
+        OrderExample example = new OrderExample();
+        example.setOrderByClause("order_time desc");
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(customerId).andStatusEqualTo(status);
+        return orderMapper.selectByExample(example);
+    }
+
+    /**
+     * @Descr 通过 员工ID + 订单状态 查询信息
+     *
+     * @param employeeId
+     * @param status
+     */
+    @Override
+    public List<Order> findByEmployeeAndStatus(long employeeId, String status) {
+        OrderExample example = new OrderExample();
+        example.setOrderByClause("order_time desc");
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andEmployeeIdEqualTo(employeeId).andStatusEqualTo(status);
+        return orderMapper.selectByExample(example);
+    }
+
+    /**
+     * @Descr 通过 起止时间 查询信息
+     *
+     * @param fromDate
+     * @param toDate
+     */
+    @Override
+    public List<Order> findByDate(long fromDate, long toDate) {
+        OrderExample example = new OrderExample();
+        example.setOrderByClause("order_time desc");
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andOrderTimeBetween(fromDate, toDate);
+        return orderMapper.selectByExample(example);
+    }
+
+    /**
+     * @Descr 通过 顾客ID + 起止日期 查询信息
+     *
+     * @param customerId
+     * @param fromDate
+     * @param toDate
+     */
+    @Override
+    public List<Order> findByCustomerAndDate(long customerId, long fromDate, long toDate) {
+        OrderExample example = new OrderExample();
+        example.setOrderByClause("order_time desc");
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(customerId).andOrderTimeBetween(fromDate, toDate);
+        return orderMapper.selectByExample(example);
+    }
+
+    /**
+     * @Descr 通过 员工ID + 起止日期 查询信息
+     *
+     * @param employeeId
+     * @param fromDate
+     * @param toDate
+     */
+    @Override
+    public List<Order> findByEmployeeAndDate(long employeeId, long fromDate, long toDate) {
+        OrderExample example = new OrderExample();
+        example.setOrderByClause("order_time desc");
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andEmployeeIdEqualTo(employeeId).andOrderTimeBetween(fromDate, toDate);
+        return orderMapper.selectByExample(example);
+    }
+
+    /**
+     * @Descr 通过 顾客ID + 起止日期 + 订单状态 查询信息
+     *
+     * @param customerId
+     * @param fromDate
+     * @param toDate
+     * @param status
+     */
+    @Override
+    public List<Order> findByCustomerAndDateAndStatus(long customerId, long fromDate, long toDate, String status) {
+        OrderExample example = new OrderExample();
+        example.setOrderByClause("order_time desc");
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(customerId).andOrderTimeBetween(fromDate, toDate).andStatusEqualTo(status);
+        return orderMapper.selectByExample(example);
+    }
+
+    /**
+     * @Descr 通过 员工ID + 起止日期 + 订单状态 查询信息
+     *
+     * @param employeeId
+     * @param fromDate
+     * @param toDate
+     * @param status
+     */
+    @Override
+    public List<Order> findByEmployeeAndDateAndStatus(long employeeId, long fromDate, long toDate, String status) {
+        OrderExample example = new OrderExample();
+        example.setOrderByClause("order_time desc");
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andEmployeeIdEqualTo(employeeId).andOrderTimeBetween(fromDate, toDate).andStatusEqualTo(status);
+        return orderMapper.selectByExample(example);
+    }
+
+    /**
+     * @Descr 通过 订单ID 修改 订单状态
+     *
+     * @param id
+     * @param status
+     */
+    @Override
+    public void editOrderStatus(long id, String status) throws CustomerException{
+        Order order = orderMapper.selectByPrimaryKey(id);
+        if (order == null) {
+            throw new CustomerException("订单不存在");
+        }
+        order.setStatus(status);
+        orderMapper.updateByPrimaryKey(order);
     }
 
 }

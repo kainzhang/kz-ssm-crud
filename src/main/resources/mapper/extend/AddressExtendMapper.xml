@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.lokka.jz.dao.extend.AddressExtendMapper">
+
+    <select id="selectAllWithUser" resultMap="ExtendResultMap">
+      SELECT * FROM jz_address
+    </select>
+
+    <resultMap id="ExtendResultMap" type="me.lokka.jz.bean.extend.AddressExtend" extends="me.lokka.jz.dao.AddressMapper.BaseResultMap">
+        <collection property="user" column="id" select="me.lokka.jz.dao.UserMapper.selectByPrimaryKey"></collection>
+    </resultMap>
+</mapper>
