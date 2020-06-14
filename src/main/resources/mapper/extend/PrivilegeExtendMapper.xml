@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.lokka.jz.dao.extend.PrivilegeExtendMapper">
+
+    <select id="selectAllWithChild" resultMap="TreeResultMap">
+        SELECT * FROM base_privilege WHERE parent_id IS NULL
+    </select>
+
+
+    <select id="selectByParentId" resultMap="TreeResultMap">
+        SELECT * FROM base_privilege WHERE parent_id=#{id}
+    </select>
+
+    <resultMap id="TreeResultMap" type="me.lokka.jz.bean.extend.PrivilegeExtend" extends="me.lokka.jz.dao.PrivilegeMapper.BaseResultMap">
+        <collection property="child" column="id" select="selectByParentId" />
+    </resultMap>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.lokka.jz.dao.extend.CommentExtendMapper">
+
+    <select id="selectAllWithChild" resultMap="CommentTreeResuleMap">
+        SELECT * FROM jz_comment WHERE parent_id is null
+    </select>
+
+    <select id="selectById" resultMap="CommentTreeResuleMap">
+        SELECT * FROM jz_comment WHERE parent_id = #{id}
+    </select>
+
+
+    <resultMap id="CommentTreeResuleMap" type="me.lokka.jz.bean.extend.CommentExtend" extends="me.lokka.jz.dao.CommentMapper.BaseResultMap">
+        <collection property="child" column="id" select="selectById"></collection>
+    </resultMap>
+
+</mapper>
