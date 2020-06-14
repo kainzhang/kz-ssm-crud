@@ -108,6 +108,18 @@ public class OrderController {
         return MessageUtil.success("SUCCESS", list);
     }
 
+    @ApiOperation(value = "通过起止日期 + 订单状态查询订单")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
+    })
+    @GetMapping("find_by_date_n_status")
+    public Message findByDateAndStatus(long fromDate, long toDate, String status) {
+        List<Order> list = orderService.findByDateAndStatus(fromDate, toDate, status);
+        return MessageUtil.success("SUCCESS", list);
+    }
+
     @ApiOperation(value = "通过顾客ID + 起止日期查询订单")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "customerId", value = "顾客唯一编号", required = true, paramType = "query"),

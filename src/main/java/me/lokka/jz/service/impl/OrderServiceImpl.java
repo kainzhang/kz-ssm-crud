@@ -163,6 +163,22 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     /**
+     * @param fromDate
+     * @param toDate
+     * @param status
+     * @return
+     * @Descr 通过 起止时间 和 订单状态 查询信息
+     */
+    @Override
+    public List<Order> findByDateAndStatus(long fromDate, long toDate, String status) {
+        OrderExample example = new OrderExample();
+        example.setOrderByClause("order_time desc");
+        OrderExample.Criteria criteria = example.createCriteria();
+        criteria.andOrderTimeBetween(fromDate, toDate).andStatusEqualTo(status);
+        return orderMapper.selectByExample(example);
+    }
+
+    /**
      * @param customerId
      * @param fromDate
      * @param toDate

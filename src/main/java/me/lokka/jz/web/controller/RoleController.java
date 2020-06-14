@@ -32,7 +32,6 @@ public class RoleController {
         return MessageUtil.success(list);
     }
 
-
     @ApiOperation(value = "通过ID查找")
     @ApiImplicitParam(name = "id", value = "类别唯一编号", required = true, paramType = "query")
     @GetMapping("find_by_id")

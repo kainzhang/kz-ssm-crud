@@ -73,6 +73,15 @@ public interface IOrderService {
     List<Order> findByDate(long fromDate, long toDate);
 
     /**
+     * @Descr 通过 起止时间 和 订单状态 查询信息
+     * @param fromDate
+     * @param toDate
+     * @param status
+     * @return
+     */
+    List<Order> findByDateAndStatus(long fromDate, long toDate, String status);
+
+    /**
      * @Descr 通过 顾客ID + 起止日期 查询信息
      * @param customerId
      * @param fromDate

@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="me.lokka.jz.dao.extend.OrderLineExtendMapper">
+
+    <select id="selectById" resultMap="OrderLineExtendResultMap">
+        SELECT * FROM  jz_order_line WHERE id = #{id}
+    </select>
+
+
     <select id="selectByOrderId"  resultMap="OrderLineExtendResultMap">
                 SELECT *
                 FROM jz_order_line
                 WHERE order_id = #{orderId}
-        </select>
+     </select>
+
+    <select id="selectAllWithProduct" resultMap="OrderLineExtendResultMap">
+        SELECT * FROM jz_order_line
+    </select>
+
     <resultMap id="OrderLineExtendResultMap"
                extends="me.lokka.jz.dao.OrderLineMapper.BaseResultMap"
                type="me.lokka.jz.bean.extend.OrderLineExtend">
