@@ -28,11 +28,40 @@ public interface IOrderService {
     OrderExtend findOrderDetailsById(long id);
 
     /**
+     * @Descr 支付订单（进入待派单状态）
+     * @param orderId
+     * @throws Exception
+     */
+    void payOrder(long orderId) throws Exception;
+
+    /**
+     * @Descr 派单（进入待接单状态->进入待服务状态）
+     * @param orderId
+     * @param employeeId
+     * @throws Exception
+     */
+    void sendOrder(long orderId, long employeeId) throws Exception;
+
+    /**
+     * @Descr 服务结束（进入待确认状态）（命名错了。。。）
+     * @param orderId
+     * @throws Exception
+     */
+    void rejectOrder(long orderId) throws Exception;
+
+    /**
+     * @Descr　确认订单（进入已完成状态）
+     * @param orderId
+     * @throws Exception
+     */
+    void confirmOrder(long orderId) throws Exception;
+
+    /**
      * @Descr 通过 订单状态 查询信息
      * @param status
      * @return
      */
-    List<Order> findByStatus(String status);
+    List<OrderExtend> findByStatus(String status);
 
     /**
      * @Descr 通过 订单顾客ID 查询信息

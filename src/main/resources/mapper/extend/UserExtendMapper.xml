@@ -6,6 +6,15 @@
         SELECT * FROM base_user
     </select>
 
+    <select id="selectByRole" resultMap="ExtendResultMap">
+        SELECT * FROM base_user
+        <where>
+            <if test="roleId != null">
+                role_id = #{roleId}
+            </if>
+        </where>
+    </select>
+
     <select id="selectById" resultMap="ExtendResultMap">
         SELECT * FROM base_user WHERE id = #{id}
     </select>

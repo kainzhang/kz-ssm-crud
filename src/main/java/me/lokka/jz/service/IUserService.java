@@ -12,6 +12,8 @@ public interface IUserService {
 
     List<UserExtend> findAllWithRole();
 
+    List<UserExtend> findAllEmployee();
+
     /**
      * @Descr 通过 用户ID 查询详情
      *

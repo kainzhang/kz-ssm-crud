@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="me.lokka.jz.dao.extend.OrderExtendMapper">
-    <select id="selectById" resultMap="orderExtendResultMap">
-        SELECT * FROM jz_order WHERE id = #{id}
+    <select id="query" resultMap="orderExtendResultMap">
+        SELECT * FROM jz_order
+        <where>
+            <if test="status != null">
+                status LIKE concat ("%", #{status}, "%")
+            </if>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
     </select>
 
     <resultMap id="orderExtendResultMap" type="me.lokka.jz.bean.extend.OrderExtend" extends="me.lokka.jz.dao.OrderMapper.BaseResultMap">

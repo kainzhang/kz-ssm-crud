@@ -31,6 +31,31 @@ public class UserController {
         return MessageUtil.success(list);
     }
 
+    /**
+     * 查询所有员工
+     * @return
+     */
+    @GetMapping("find_all_employee")
+    public Message findAllEmployee(){
+        return MessageUtil.success(userService.findAllEmployee());
+    }
+
+    @GetMapping("auditing")
+    public Message auditing(long id){
+        User user = userService.findById(id);
+        user.setStatus("启用");
+        userService.saveOrEdit(user);
+        return MessageUtil.success("审核成功");
+    }
+
+    @GetMapping("refuse_auditing")
+    public Message refuseauditing(long id){
+        User user =  userService.findById(id);
+        user.setStatus("禁用");
+        userService.saveOrEdit(user);
+        return MessageUtil.success("已拒绝审核");
+    }
+
     @ApiOperation(value = "获取全部+角色信息")
     @GetMapping("find_all_with_role")
     public Message findAllWithRole() {
@@ -62,26 +87,26 @@ public class UserController {
         return MessageUtil.success(userExtend);
     }
 
-    @ApiOperation(value = "通过ID修改用户状态")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id" ,value = "用户唯一编号", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "status" ,value = "用户状态", required = true, paramType = "query")
-    })
-    @PostMapping("edit_status")
-    public Message editStatus(long id, String status) {
-        userService.editStatusById(id, status);
-        return MessageUtil.success("修改成功");
-    }
-
-    @ApiOperation(value = "通过ID修改头像")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id" ,value = "用户唯一编号", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "avatar" ,value = "头像文件", required = true, paramType = "query")
-    })
-    @PostMapping("edit_avatar")
-    public Message editAvatar(long id, String avatar) {
-        userService.editAvatarById(id, avatar);
-        return MessageUtil.success("修改成功");
-    }
+//    @ApiOperation(value = "通过ID修改用户状态")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "id" ,value = "用户唯一编号", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "status" ,value = "用户状态", required = true, paramType = "query")
+//    })
+//    @PostMapping("edit_status")
+//    public Message editStatus(long id, String status) {
+//        userService.editStatusById(id, status);
+//        return MessageUtil.success("修改成功");
+//    }
+//
+//    @ApiOperation(value = "通过ID修改头像")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "id" ,value = "用户唯一编号", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "avatar" ,value = "头像文件", required = true, paramType = "query")
+//    })
+//    @PostMapping("edit_avatar")
+//    public Message editAvatar(long id, String avatar) {
+//        userService.editAvatarById(id, avatar);
+//        return MessageUtil.success("修改成功");
+//    }
 
 }

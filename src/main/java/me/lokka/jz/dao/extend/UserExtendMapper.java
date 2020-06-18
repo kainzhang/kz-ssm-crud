@@ -8,6 +8,8 @@ public interface UserExtendMapper {
 
     List<UserExtend> selectAllWithRole();
 
+    List<UserExtend> selectByRole(long roleId);
+
     UserExtend selectById(long id);
 
 }

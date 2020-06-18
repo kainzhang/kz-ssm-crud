@@ -3,9 +3,11 @@ package me.lokka.jz.service.impl;
 import me.lokka.jz.bean.Order;
 import me.lokka.jz.bean.OrderExample;
 import me.lokka.jz.bean.OrderLine;
+import me.lokka.jz.bean.User;
 import me.lokka.jz.bean.extend.OrderExtend;
 import me.lokka.jz.dao.OrderLineMapper;
 import me.lokka.jz.dao.OrderMapper;
+import me.lokka.jz.dao.UserMapper;
 import me.lokka.jz.dao.extend.OrderExtendMapper;
 import me.lokka.jz.service.IOrderService;
 import me.lokka.jz.utils.CustomerException;
@@ -29,6 +31,8 @@ public class OrderServiceImpl implements IOrderService {
     @Resource
     private OrderMapper orderMapper;
     @Resource
+    private UserMapper userMapper;
+    @Resource
     private OrderLineMapper orderLineMapper;
     @Resource
     private OrderExtendMapper orderExtendMapper;
@@ -46,7 +50,7 @@ public class OrderServiceImpl implements IOrderService {
         order.setCustomerId(orderVM.getCustomerId());
         order.setEmployeeId(orderVM.getEmployeeId());
         order.setOrderTime(new Date().getTime());
-        order.setStatus(OrderExtend.STATUS_UNPAID);
+        order.setStatus(OrderExtend.STATUS_WFK);
 
         List<OrderLine> orderLines = orderVM.getOrderLines();
 
@@ -72,7 +76,11 @@ public class OrderServiceImpl implements IOrderService {
      */
     @Override
     public OrderExtend findOrderDetailsById(long id) {
-        return orderExtendMapper.selectById(id);
+        List<OrderExtend> list = orderExtendMapper.query(id, null);
+        if (list.size() > 0) {
+            return list.get(0);
+        }
+        return null;
     }
 
     /**
@@ -81,13 +89,95 @@ public class OrderServiceImpl implements IOrderService {
      * @Descr 通过 订单状态 查询信息
      */
     @Override
-    public List<Order> findByStatus(String status) {
-        OrderExample example = new OrderExample();
-        example.setOrderByClause("order_time desc");
-        OrderExample.Criteria criteria = example.createCriteria();
-        criteria.andStatusEqualTo(status);
-        return orderMapper.selectByExample(example);
+    public List<OrderExtend> findByStatus(String status) {
+        return  orderExtendMapper.query(null, status);
     }
+
+    /**
+     * @param orderId
+     * @throws Exception
+     * @Descr 支付订单（进入待派单状态）
+     */
+    @Override
+    public void payOrder(long orderId) throws Exception {
+        // 支付订单
+        // 省略支付流程...
+        // 简化的支付流程
+        Order order = orderMapper.selectByPrimaryKey(orderId);
+        if(order == null){
+            throw new Exception("该订单不存在");
+        }
+        // 进入待派单状态
+        order.setStatus(OrderExtend.STATUS_DPD);
+        orderMapper.updateByPrimaryKey(order);
+    }
+
+    /**
+     * @param orderId
+     * @param employeeId
+     * @throws Exception
+     * @Descr 派单（进入待接单状态->进入待服务状态）
+     */
+    @Override
+    public void sendOrder(long orderId, long employeeId) throws Exception {
+        // 派单
+        Order order = orderMapper.selectByPrimaryKey(orderId);
+        if(order == null ){
+            throw new Exception("该订单不存在");
+        }else if (!order.getStatus().equals("待派单") ){
+            throw new Exception("订单未支付/订单异常");
+        }
+        User emp = userMapper.selectByPrimaryKey(employeeId);
+        if (emp == null){
+            throw new Exception("该员工不存在");
+        }
+        // 进入待接单状态（省略）->进入待服务状
+        order.setStatus(OrderExtend.STATUS_DFW);
+        orderMapper.updateByPrimaryKey(order);
+    }
+
+    /**
+     * @param orderId
+     * @throws Exception
+     * @Descr 服务结束（进入待确认状态）（命名错了。。。）
+     */
+    @Override
+    public void rejectOrder(long orderId) throws Exception {
+        //服务结束
+        Order order = orderMapper.selectByPrimaryKey(orderId);
+        if(order == null ){
+            throw new Exception("该订单不存在");
+        }else if (!order.getStatus().equals("待服务")){
+            throw new Exception("订单异常");
+        }
+        // 进入待确认状态
+        order.setStatus(OrderExtend.STATUS_DQR);
+        orderMapper.updateByPrimaryKey(order);
+    }
+
+    /**
+     * @param orderId
+     * @throws Exception
+     * @Descr　确认订单（进入已完成状态）
+     */
+    @Override
+    public void confirmOrder(long orderId) throws Exception {
+        // 顾客确认订单
+        Order order = orderMapper.selectByPrimaryKey(orderId);
+        if(order == null ){
+            throw new Exception("该订单不存在");
+        }else if (!order.getStatus().equals("待确认") ){
+            throw new Exception("订单异常");
+        }
+        // 进入已完成状态
+        order.setStatus(OrderExtend.STATUS_YWC);
+        orderMapper.updateByPrimaryKey(order);
+    }
+
+    /**
+     *                   这是一条分割线
+     *  ==================================================
+     */
 
     /**
      * @param customerId

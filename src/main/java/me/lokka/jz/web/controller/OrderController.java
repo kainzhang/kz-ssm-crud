@@ -10,6 +10,7 @@ import me.lokka.jz.service.IOrderService;
 import me.lokka.jz.utils.Message;
 import me.lokka.jz.utils.MessageUtil;
 import me.lokka.jz.vm.OrderVM;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,130 +56,165 @@ public class OrderController {
     @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
     @GetMapping("find_by_status")
     public Message findByStatus(String status) {
-        List<Order> list = orderService.findByStatus(status);
+        List<OrderExtend> list = orderService.findByStatus(status);
         return MessageUtil.success("SUCCESS", list);
     }
 
-    @ApiOperation(value = "通过顾客ID查询订单")
-    @ApiImplicitParam(name = "customerId", value = "顾客唯一编号", required = true, paramType = "query")
-    @GetMapping("find_by_customer")
-    public Message findByCustomer(long customerId) {
-        List<Order> list = orderService.findByCustomer(customerId);
-        return MessageUtil.success("SUCCESS", list);
+    @GetMapping("pay_order")
+    @ApiOperation("支付订单")
+    public Message payOrder(long orderId) throws Exception{
+        orderService.payOrder(orderId);
+        return MessageUtil.success("success");
     }
 
-    @ApiOperation(value = "通过员工ID查询订单")
-    @ApiImplicitParam(name = "employeeId", value = "员工唯一编号", required = true, paramType = "query")
-    @GetMapping("find_by_employee")
-    public Message findByEmployee(long employeeId) {
-        List<Order> list = orderService.findByEmployee(employeeId);
-        return MessageUtil.success("SUCCESS", list);
-    }
-
-    @ApiOperation(value = "通过顾客ID + 状态查询订单")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "customerId", value = "顾客唯一编号", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
-    })
-    @GetMapping("find_by_customer_n_status")
-    public Message findByCustomerAndStatus(long customerId, String status) {
-        List<Order> list = orderService.findByCustomerAndStatus(customerId, status);
-        return MessageUtil.success("SUCCESS", list);
-    }
-
-    @ApiOperation(value = "通过员工ID + 状态查询订单")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "employeeId", value = "员工唯一编号", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
-    })
-    @GetMapping("find_by_employee_n_status")
-    public Message findByEmployeeAndStatus(long employeeId, String status) {
-        List<Order> list = orderService.findByEmployeeAndStatus(employeeId, status);
-        return MessageUtil.success("SUCCESS", list);
-    }
-
-    @ApiOperation(value = "通过起止日期查询订单")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true, paramType = "query")
-    })
-    @GetMapping("find_by_date")
-    public Message findByDate(long fromDate, long toDate) {
-        List<Order> list = orderService.findByDate(fromDate, toDate);
-        return MessageUtil.success("SUCCESS", list);
-    }
-
-    @ApiOperation(value = "通过起止日期 + 订单状态查询订单")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
-    })
-    @GetMapping("find_by_date_n_status")
-    public Message findByDateAndStatus(long fromDate, long toDate, String status) {
-        List<Order> list = orderService.findByDateAndStatus(fromDate, toDate, status);
-        return MessageUtil.success("SUCCESS", list);
-    }
-
-    @ApiOperation(value = "通过顾客ID + 起止日期查询订单")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "customerId", value = "顾客唯一编号", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true, paramType = "query")
-    })
-    @GetMapping("find_by_customer_n_date")
-    public Message findByCustomerAndDate(long customerId, long fromDate, long toDate) {
-        List<Order> list = orderService.findByCustomerAndDate(customerId, fromDate, toDate);
-        return MessageUtil.success("SUCCESS", list);
-    }
-
-    @ApiOperation(value = "通过员工ID + 起止日期查询订单")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "employeeId", value = "员工唯一编号", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true, paramType = "query")
-    })
-    @GetMapping("find_by_employee_n_date")
-    public Message findByEmployeeAndDate(long employeeId, long fromDate, long toDate) {
-        List<Order> list = orderService.findByEmployeeAndDate(employeeId, fromDate, toDate);
-        return MessageUtil.success("SUCCESS", list);
-    }
-
-    @ApiOperation(value = "通过顾客ID + 起止日期 + 订单状态查询订单")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "customerId", value = "顾客唯一编号", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
-    })
-    @GetMapping("find_by_customer_n_date_n_status")
-    public Message findByCustomerAndDateAndStatus(long customerId, long fromDate, long toDate, String status) {
-        List<Order> list = orderService.findByCustomerAndDateAndStatus(customerId, fromDate, toDate, status);
-        return MessageUtil.success("SUCCESS", list);
-    }
-
-    @ApiOperation(value = "通过员工ID + 起止日期 + 订单状态查询订单")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "employeeId", value = "员工唯一编号", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
-    })
-    @GetMapping("find_by_employee_n_date_n_status")
-    public Message findByEmployeeAndDateAndStatus(long employeeId, long fromDate, long toDate, String status) {
-        List<Order> list = orderService.findByEmployeeAndDateAndStatus(employeeId, fromDate, toDate, status);
-        return MessageUtil.success("SUCCESS", list);
+    @GetMapping("send_order")
+    @ApiOperation("派单")
+    public Message sendOrder(long orderId,long employeeId) throws Exception{
+        orderService.sendOrder(orderId,employeeId);
+        return MessageUtil.success("success");
     }
 
 
-    @ApiOperation(value = "通过ID修改订单状态")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "类别唯一编号", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
-    })
-    @GetMapping("edit_order_status")
-    public Message editOrderStatus(long id, String status) {
-        orderService.editOrderStatus(id, status);
-        return MessageUtil.success("订单状态修改成功");
+    @GetMapping("reject_order")
+    @ApiOperation("服务订单")
+    public Message rejectOrder(long orderId) throws Exception{
+        orderService.rejectOrder(orderId);
+        return MessageUtil.success("success");
     }
+
+    @GetMapping("confirm_order")
+    @ApiOperation("确认订单")
+    public Message confirmOrder(long orderId) throws Exception{
+        orderService.confirmOrder(orderId);
+        return MessageUtil.success("success");
+    }
+
+    /**
+     *                    这是一条分割线
+     *  =======================================================
+     */
+
+
+//    @ApiOperation(value = "通过顾客ID查询订单")
+//    @ApiImplicitParam(name = "customerId", value = "顾客唯一编号", required = true, paramType = "query")
+//    @GetMapping("find_by_customer")
+//    public Message findByCustomer(long customerId) {
+//        List<Order> list = orderService.findByCustomer(customerId);
+//        return MessageUtil.success("SUCCESS", list);
+//    }
+//
+//    @ApiOperation(value = "通过员工ID查询订单")
+//    @ApiImplicitParam(name = "employeeId", value = "员工唯一编号", required = true, paramType = "query")
+//    @GetMapping("find_by_employee")
+//    public Message findByEmployee(long employeeId) {
+//        List<Order> list = orderService.findByEmployee(employeeId);
+//        return MessageUtil.success("SUCCESS", list);
+//    }
+//
+//    @ApiOperation(value = "通过顾客ID + 状态查询订单")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "customerId", value = "顾客唯一编号", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
+//    })
+//    @GetMapping("find_by_customer_n_status")
+//    public Message findByCustomerAndStatus(long customerId, String status) {
+//        List<Order> list = orderService.findByCustomerAndStatus(customerId, status);
+//        return MessageUtil.success("SUCCESS", list);
+//    }
+//
+//    @ApiOperation(value = "通过员工ID + 状态查询订单")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "employeeId", value = "员工唯一编号", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
+//    })
+//    @GetMapping("find_by_employee_n_status")
+//    public Message findByEmployeeAndStatus(long employeeId, String status) {
+//        List<Order> list = orderService.findByEmployeeAndStatus(employeeId, status);
+//        return MessageUtil.success("SUCCESS", list);
+//    }
+//
+//    @ApiOperation(value = "通过起止日期查询订单")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true, paramType = "query")
+//    })
+//    @GetMapping("find_by_date")
+//    public Message findByDate(long fromDate, long toDate) {
+//        List<Order> list = orderService.findByDate(fromDate, toDate);
+//        return MessageUtil.success("SUCCESS", list);
+//    }
+//
+//    @ApiOperation(value = "通过起止日期 + 订单状态查询订单")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
+//    })
+//    @GetMapping("find_by_date_n_status")
+//    public Message findByDateAndStatus(long fromDate, long toDate, String status) {
+//        List<Order> list = orderService.findByDateAndStatus(fromDate, toDate, status);
+//        return MessageUtil.success("SUCCESS", list);
+//    }
+//
+//    @ApiOperation(value = "通过顾客ID + 起止日期查询订单")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "customerId", value = "顾客唯一编号", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true, paramType = "query")
+//    })
+//    @GetMapping("find_by_customer_n_date")
+//    public Message findByCustomerAndDate(long customerId, long fromDate, long toDate) {
+//        List<Order> list = orderService.findByCustomerAndDate(customerId, fromDate, toDate);
+//        return MessageUtil.success("SUCCESS", list);
+//    }
+//
+//    @ApiOperation(value = "通过员工ID + 起止日期查询订单")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "employeeId", value = "员工唯一编号", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true, paramType = "query")
+//    })
+//    @GetMapping("find_by_employee_n_date")
+//    public Message findByEmployeeAndDate(long employeeId, long fromDate, long toDate) {
+//        List<Order> list = orderService.findByEmployeeAndDate(employeeId, fromDate, toDate);
+//        return MessageUtil.success("SUCCESS", list);
+//    }
+//
+//    @ApiOperation(value = "通过顾客ID + 起止日期 + 订单状态查询订单")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "customerId", value = "顾客唯一编号", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
+//    })
+//    @GetMapping("find_by_customer_n_date_n_status")
+//    public Message findByCustomerAndDateAndStatus(long customerId, long fromDate, long toDate, String status) {
+//        List<Order> list = orderService.findByCustomerAndDateAndStatus(customerId, fromDate, toDate, status);
+//        return MessageUtil.success("SUCCESS", list);
+//    }
+//
+//    @ApiOperation(value = "通过员工ID + 起止日期 + 订单状态查询订单")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "employeeId", value = "员工唯一编号", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
+//    })
+//    @GetMapping("find_by_employee_n_date_n_status")
+//    public Message findByEmployeeAndDateAndStatus(long employeeId, long fromDate, long toDate, String status) {
+//        List<Order> list = orderService.findByEmployeeAndDateAndStatus(employeeId, fromDate, toDate, status);
+//        return MessageUtil.success("SUCCESS", list);
+//    }
+//
+//
+//    @ApiOperation(value = "通过ID修改订单状态")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "id", value = "类别唯一编号", required = true, paramType = "query"),
+//            @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
+//    })
+//    @GetMapping("edit_order_status")
+//    public Message editOrderStatus(long id, String status) {
+//        orderService.editOrderStatus(id, status);
+//        return MessageUtil.success("订单状态修改成功");
+//    }
 }

@@ -15,11 +15,11 @@ import me.lokka.jz.bean.User;
 import java.util.List;
 
 public class OrderExtend extends Order {
-    public static final String STATUS_UNPAID = "未付款";
-    public static final String STATUS_PAID = "已付款";
-    public static final String STATUS_PROCESSIN = "处理中";
-    public static final String STATUS_2BCOMMENT = "待评论";
-    public static final String STATUS_DONE = "已完成";
+    public static final String STATUS_WFK = "未付款";
+    public static final String STATUS_DPD = "待派单";
+    public static final String STATUS_DFW = "待服务";
+    public static final String STATUS_DQR = "待确认";
+    public static final String STATUS_YWC = "已完成";
 
     private User customer;
     private User employee;

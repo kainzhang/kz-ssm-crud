@@ -30,6 +30,12 @@ public class UserServiceImpl implements IUserService {
         return userExtendMapper.selectAllWithRole();
     }
 
+    @Override
+    public List<UserExtend> findAllEmployee() {
+        // Employee : roleId = 3
+        return userExtendMapper.selectByRole(3);
+    }
+
     /**
      * @param id
      * @return

@@ -11,6 +11,6 @@
     </select>
 
     <resultMap id="TreeResultMap" type="me.lokka.jz.bean.extend.CategoryExtend" extends="me.lokka.jz.dao.CategoryMapper.BaseResultMap">
-        <collection property="child" column="id" select="selectByParentId"></collection>
+        <collection property="children" column="id" select="selectByParentId"></collection>
     </resultMap>
 </mapper>

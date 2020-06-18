@@ -14,6 +14,6 @@ import java.util.List;
 
 public interface OrderExtendMapper {
 
-    OrderExtend selectById(long id);
+    List<OrderExtend> query(Long id, String status);
 
 }
