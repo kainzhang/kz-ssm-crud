@@ -6,6 +6,15 @@
         SELECT * FROM jz_product
     </select>
 
+    <select id="selectByName" resultMap="ExtendResultMap">
+        SELECT * FROM jz_product
+        <where>
+            <if test="name != null">
+                name LIKE concat ("%", #{name}, "%")
+            </if>
+        </where>
+    </select>
+
     <resultMap id="ExtendResultMap" type="me.lokka.jz.bean.extend.ProductExtend" extends="me.lokka.jz.dao.ProductMapper.BaseResultMap">
         <association property="category" column="category_id" select="me.lokka.jz.dao.CategoryMapper.selectByPrimaryKey">
             <id property="id" column="id"></id>

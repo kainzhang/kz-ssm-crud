@@ -10,4 +10,6 @@ public interface ProductExtendMapper extends ProductMapper {
 
     List<ProductExtend> selectAllWithCategory();
 
+    List<ProductExtend> selectByName(String name);
+
 }

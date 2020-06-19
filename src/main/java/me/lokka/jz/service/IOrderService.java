@@ -20,12 +20,21 @@ public interface IOrderService {
 
     List<Order> findAll();
 
+    List<OrderExtend> query(String status, Long fromDate, Long toDate);
+
     /**
      * @Descr 通过 订单ID 查询详细信息
      * @param id
      * @return
      */
     OrderExtend findOrderDetailsById(long id);
+
+    /**
+     * @Descr 通过 订单状态 查询信息
+     * @param status
+     * @return
+     */
+    List<OrderExtend> findByStatus(String status);
 
     /**
      * @Descr 支付订单（进入待派单状态）
@@ -55,13 +64,6 @@ public interface IOrderService {
      * @throws Exception
      */
     void confirmOrder(long orderId) throws Exception;
-
-    /**
-     * @Descr 通过 订单状态 查询信息
-     * @param status
-     * @return
-     */
-    List<OrderExtend> findByStatus(String status);
 
     /**
      * @Descr 通过 订单顾客ID 查询信息

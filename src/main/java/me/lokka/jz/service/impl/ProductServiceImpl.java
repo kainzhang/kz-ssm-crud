@@ -31,6 +31,11 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public List<ProductExtend> findByName(String name) {
+        return productExtendMapper.selectByName(name);
+    }
+
+    @Override
     public List<Product> findByCategoryId(long categoryId) {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();

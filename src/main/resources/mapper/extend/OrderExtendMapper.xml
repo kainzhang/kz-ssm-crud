@@ -4,13 +4,17 @@
     <select id="query" resultMap="orderExtendResultMap">
         SELECT * FROM jz_order
         <where>
-            <if test="status != null">
-                status LIKE concat ("%", #{status}, "%")
-            </if>
             <if test="id != null">
                 id = #{id}
             </if>
+            <if test="status != null">
+                status LIKE concat ("%", #{status}, "%")
+            </if>
+            <if test="fromDate != null and toDate != null">
+                AND order_time BETWEEN #{fromDate} AND #{toDate}
+            </if>
         </where>
+        ORDER BY order_time desc
     </select>
 
     <resultMap id="orderExtendResultMap" type="me.lokka.jz.bean.extend.OrderExtend" extends="me.lokka.jz.dao.OrderMapper.BaseResultMap">

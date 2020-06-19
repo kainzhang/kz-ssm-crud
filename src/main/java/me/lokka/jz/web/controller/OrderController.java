@@ -52,11 +52,19 @@ public class OrderController {
         return MessageUtil.success("SUCCESS", orderExtend);
     }
 
+//    @ApiOperation(value = "通过订单状态查询订单")
+//    @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
+//    @GetMapping("find_by_status")
+//    public Message findByStatus(String status) {
+//        List<OrderExtend> list = orderService.findByStatus(status);
+//        return MessageUtil.success("SUCCESS", list);
+//    }
+
     @ApiOperation(value = "通过订单状态查询订单")
-    @ApiImplicitParam(name = "status", value = "订单状态", required = true, paramType = "query")
-    @GetMapping("find_by_status")
-    public Message findByStatus(String status) {
-        List<OrderExtend> list = orderService.findByStatus(status);
+    @GetMapping("query")
+    public Message query(String status, Long fromDate, Long toDate) {
+        List<OrderExtend> list = orderService.query(status, fromDate, toDate);
+//        System.out.println("====================" + fromDate + " " + toDate);
         return MessageUtil.success("SUCCESS", list);
     }
 

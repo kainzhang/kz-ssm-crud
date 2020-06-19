@@ -28,10 +28,11 @@ public class ProductController {
         return MessageUtil.success(list);
     }
 
-    @ApiOperation(value = "获取全部+类别信息")
+    @ApiOperation(value = "获取全部+类别信息, 输入名称则模糊查询")
     @GetMapping("find_all_with_category")
-    public Message findAllWithCategory() {
-        List<ProductExtend> list = productService.findAllWithCategory();
+    public Message findAllWithCategory(String keyword) {
+        List<ProductExtend> list = productService.findByName(keyword);
+        System.out.println(keyword);
         return MessageUtil.success(list);
     }
 

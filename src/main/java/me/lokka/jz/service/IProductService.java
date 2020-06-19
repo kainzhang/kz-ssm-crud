@@ -12,6 +12,8 @@ public interface IProductService {
 
     List<ProductExtend> findAllWithCategory();
 
+    List<ProductExtend> findByName(String name);
+
     List<Product> findByCategoryId(long categoryId);
 
     void saveOrEdit(Product product) throws CustomerException;

@@ -69,6 +69,16 @@ public class OrderServiceImpl implements IOrderService {
         return orderMapper.selectByExample(example);
     }
 
+    @Override
+    public List<OrderExtend> query(String status, Long fromDate, Long toDate) {
+        if (fromDate == null) {
+            fromDate = (long)0;
+        } else if (toDate == null) {
+            toDate = new Date().getTime();
+        }
+        return orderExtendMapper.query(null, status, fromDate, toDate, "order_time desc");
+    }
+
     /**
      * @param id
      * @return
@@ -76,7 +86,7 @@ public class OrderServiceImpl implements IOrderService {
      */
     @Override
     public OrderExtend findOrderDetailsById(long id) {
-        List<OrderExtend> list = orderExtendMapper.query(id, null);
+        List<OrderExtend> list = orderExtendMapper.query(id, null, null, null, null);
         if (list.size() > 0) {
             return list.get(0);
         }
@@ -90,7 +100,7 @@ public class OrderServiceImpl implements IOrderService {
      */
     @Override
     public List<OrderExtend> findByStatus(String status) {
-        return  orderExtendMapper.query(null, status);
+        return  orderExtendMapper.query(null, status, null, null, "order_time desc");
     }
 
     /**
