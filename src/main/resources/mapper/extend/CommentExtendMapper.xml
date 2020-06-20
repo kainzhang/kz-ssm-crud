@@ -10,9 +10,8 @@
         SELECT * FROM jz_comment WHERE parent_id = #{id}
     </select>
 
-
     <resultMap id="CommentTreeResuleMap" type="me.lokka.jz.bean.extend.CommentExtend" extends="me.lokka.jz.dao.CommentMapper.BaseResultMap">
-        <collection property="child" column="id" select="selectById"></collection>
+        <collection property="children" column="id" select="selectById"></collection>
     </resultMap>
 
 </mapper>

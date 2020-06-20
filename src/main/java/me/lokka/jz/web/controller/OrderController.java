@@ -60,11 +60,10 @@ public class OrderController {
 //        return MessageUtil.success("SUCCESS", list);
 //    }
 
-    @ApiOperation(value = "通过订单状态查询订单")
+    @ApiOperation(value = "通过订单状态 + 起止日期查询订单")
     @GetMapping("query")
     public Message query(String status, Long fromDate, Long toDate) {
         List<OrderExtend> list = orderService.query(status, fromDate, toDate);
-//        System.out.println("====================" + fromDate + " " + toDate);
         return MessageUtil.success("SUCCESS", list);
     }
 

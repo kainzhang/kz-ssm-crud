@@ -5,14 +5,13 @@ import me.lokka.jz.bean.Comment;
 import java.util.List;
 
 public class CommentExtend extends Comment {
-    private List<Comment> child;
+    private List<Comment> children;
 
-    public List<Comment> getChild() {
-        return child;
+    public List<Comment> getChildren() {
+        return children;
     }
 
-    public void setChild(List<Comment> child) {
-        this.child = child;
+    public void setChildren(List<Comment> children) {
+        this.children = children;
     }
-
 }
